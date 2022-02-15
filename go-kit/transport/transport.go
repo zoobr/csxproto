@@ -1,4 +1,4 @@
-package proto
+package transport
 
 import (
 	"context"
@@ -7,31 +7,14 @@ import (
 
 	httptransport "github.com/go-kit/kit/transport/http"
 	"github.com/google/uuid"
+	"github.com/zoobr/csxlib/logger"
 )
-
-// global logger instance
-var lg = logger{}
-
-type logger struct {
-	logger Logger
-}
-
-type Logger interface {
-	Infof(string, ...interface{})
-	Error(...interface{})
-	Debugw(string, ...interface{})
-}
-
-// Init init logger
-func Init(l Logger) {
-	lg.logger = l
-}
 
 // ReqInfo logs with request ID getting from context
 func ReqInfo(ctx context.Context, args ...interface{}) {
 	reqID, err := getReqID(ctx)
 	if err == nil {
-		lg.logger.Infof("Request ID: %s Payload: %s", reqID, args)
+		logger.Infof("Request ID: %s Payload: %s", reqID, args)
 	}
 }
 
@@ -50,7 +33,7 @@ func LoggerPathThrough() httptransport.RequestFunc {
 
 // ServerErrorLogger return HTTP server error logger for go-kit server
 func ServerErrorLogger() httptransport.ServerOption {
-	return httptransport.ServerErrorLogger(&lg)
+	return httptransport.ServerErrorLogger(logger.GetLogger())
 }
 
 // getReqID returns request ID or error from context
