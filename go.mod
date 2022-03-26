@@ -6,7 +6,7 @@ require github.com/google/uuid v1.3.0
 
 require (
 	github.com/go-kit/kit v0.12.0
-	github.com/zoobr/csxlib v0.0.1
+	github.com/zoobr/csxlib v0.0.2
 )
 
 require (
