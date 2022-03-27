@@ -31,11 +31,6 @@ func LoggerPathThrough() httptransport.RequestFunc {
 	}
 }
 
-// ServerErrorLogger return HTTP server error logger for go-kit server
-func ServerErrorLogger() httptransport.ServerOption {
-	return httptransport.ServerErrorLogger(logger.GetLogger())
-}
-
 // getReqID returns request ID or error from context
 // for path through logging
 func getReqID(ctx context.Context) (reqID string, err error) {
