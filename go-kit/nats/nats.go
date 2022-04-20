@@ -3,12 +3,14 @@ package nats
 import (
 	"context"
 
+	csxnats "github.com/csxbattle/nats"
+	"github.com/zoobr/csxlib/logger"
+
 	"github.com/go-kit/kit/endpoint"
 	"github.com/nats-io/nats.go"
-	"github.com/zoobr/csxlib/logger"
 )
 
-func SubscribeEndpoint(nc *nats.Conn, subject string, ctx context.Context, ep endpoint.Endpoint) {
+func SubscribeEndpoint(nc *csxnats.Conn, subject string, ctx context.Context, ep endpoint.Endpoint) {
 	_, err := nc.Subscribe(subject, func(msg *nats.Msg) {
 		_, err := ep(ctx, msg.Data)
 		if err != nil {
